@@ -3,6 +3,7 @@ import 'package:app_shoe_shop/core/flutter_icons.dart';
 import 'package:app_shoe_shop/models/categories_model.dart';
 import 'package:app_shoe_shop/models/shoe_model.dart';
 import 'package:app_shoe_shop/pages/detail_page.dart';
+import 'package:app_shoe_shop/widgets/Drawer.dart';
 import 'package:app_shoe_shop/widgets/app_clipper.dart';
 import 'package:flutter/material.dart';
 import './../functions/round.dart';
@@ -23,11 +24,13 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
-        leading: Icon(
-          FlutterIcons.menu,
-          color: Colors.black,
-        ),
+
+        // leading: Icon(
+        //   FlutterIcons.menu,
+        //   color: Colors.black,
+        // ),
       ),
+      drawer: MyDrawer(),
       body: ListView(
         children: <Widget>[
           Padding(

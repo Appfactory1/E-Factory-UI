@@ -1,3 +1,4 @@
+import 'package:app_shoe_shop/pages/home.dart';
 import 'package:app_shoe_shop/pages/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -16,8 +17,15 @@ class MyApp extends StatelessWidget {
         textTheme: GoogleFonts.latoTextTheme(
           Theme.of(context).textTheme,
         ),
+        appBarTheme: AppBarTheme(
+          iconTheme: IconThemeData(color: Colors.black),
+          textTheme: Theme.of(context).textTheme.apply(
+                bodyColor: Colors.black,
+                displayColor: Colors.black,
+              ),
+        ),
       ),
-      home: HomePage(),
+      home: Home(),
     );
   }
 }
