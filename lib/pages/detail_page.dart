@@ -2,6 +2,7 @@ import 'package:app_shoe_shop/core/const.dart';
 import 'package:app_shoe_shop/core/flutter_icons.dart';
 import 'package:app_shoe_shop/models/categories_model.dart';
 import 'package:app_shoe_shop/models/shoe_model.dart';
+import 'package:app_shoe_shop/pages/work_detail.dart';
 import 'package:app_shoe_shop/widgets/app_clipper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
@@ -77,7 +78,12 @@ class _DetailPageState extends State<DetailPage> {
                           SizedBox(height: 16),
                           ...newworkers.map((data) {
                             return GestureDetector(
-                              onTap: () {},
+                              onTap: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => WorkForm()));
+                              },
                               child: Container(
                                 margin: EdgeInsets.only(bottom: 10),
                                 padding: EdgeInsets.symmetric(
