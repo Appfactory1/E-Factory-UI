@@ -3,6 +3,7 @@ import 'package:app_shoe_shop/core/flutter_icons.dart';
 import 'package:app_shoe_shop/models/categories_model.dart';
 import 'package:app_shoe_shop/models/shoe_model.dart';
 import 'package:app_shoe_shop/pages/detail_page.dart';
+import 'package:app_shoe_shop/pages/sub_categories.dart';
 import 'package:app_shoe_shop/widgets/Drawer.dart';
 import 'package:app_shoe_shop/widgets/app_clipper.dart';
 import 'package:flutter/material.dart';
@@ -127,7 +128,10 @@ class _HomePageState extends State<HomePage> {
           SizedBox(height: 24),
           ...workerList.map((data) {
             return GestureDetector(
-              onTap: () {},
+              onTap: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => SubCategories()));
+              },
               child: Container(
                 margin: EdgeInsets.only(left: 16, right: 16, bottom: 10),
                 padding: EdgeInsets.symmetric(vertical: 15, horizontal: 15),
