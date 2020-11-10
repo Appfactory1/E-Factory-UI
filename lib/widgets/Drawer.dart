@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-=======
 import 'package:app_shoe_shop/pages/History.dart';
 import 'package:app_shoe_shop/pages/home.dart';
 import 'package:app_shoe_shop/pages/home_page.dart';
@@ -51,4 +49,3 @@ class MyDrawer extends StatelessWidget {
     );
   }
 }
->>>>>>> parent of b69ff03... almost UI

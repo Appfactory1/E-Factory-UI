@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-=======
 import 'package:app_shoe_shop/models/badges.dart';
 import 'package:app_shoe_shop/models/reciews.dart';
 import 'package:flutter/material.dart';
@@ -553,4 +551,3 @@ Widget text(String text,
 //     );
 //   }
 // }
->>>>>>> parent of b69ff03... almost UI
