@@ -106,80 +106,61 @@ class _WorkerDetailState extends State<WorkerDetail> {
               ),
             ),
             body: TabBarView(
-              //physics: AlwaysScrollableScrollPhysics(),
               children: <Widget>[
-                // ListView.builder(
-                //   key: PageStorageKey("key"),
-                //   itemCount: 100,
-                //   itemBuilder: (_, i) => ListTile(title: Text("bla")),
-                // ),
-                // ListView.builder(
-                //   key: PageStorageKey("key1"),
-                //   itemCount: 100,
-                //   itemBuilder: (_, i) => ListTile(title: Text("bla")),
-                // ),
                 Padding(
                   //one
                   padding: const EdgeInsets.all(12.0),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Expanded(
-                        child: Padding(
-                          padding: const EdgeInsets.only(bottom: 8.0),
-                          child: ListView.builder(
-                            physics: AlwaysScrollableScrollPhysics(),
-                            shrinkWrap: true,
-                            itemCount: _badges.length,
-                            itemBuilder: (BuildContext ctxt, int index) {
-                              return Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: GestureDetector(
-                                  onTap: () {
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                WorkerDetail()));
-                                  },
-                                  child: Container(
-                                    decoration: BoxDecoration(
-                                        color: Color(0xFF3F414F),
-                                        borderRadius:
-                                            BorderRadius.circular(10)),
-                                    child: Row(
-                                      children: [
-                                        Padding(
-                                            padding: EdgeInsets.symmetric(
-                                                horizontal: 20),
-                                            child: _badges[index].icon),
-                                        Padding(
-                                          padding: const EdgeInsets.only(
-                                              right: 12, top: 8, bottom: 8),
-                                          child: Container(
-                                            width: 1,
-                                            height: 60,
-                                            decoration: BoxDecoration(
-                                                color: Colors.grey,
-                                                borderRadius:
-                                                    BorderRadius.circular(10)),
-                                          ),
-                                        ),
-                                        Text(
-                                          _badges[index].name,
-                                          style: TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 20,
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                      ],
+                      ListView.builder(
+                        shrinkWrap: true,
+                        itemCount: _badges.length,
+                        itemBuilder: (BuildContext ctxt, int index) {
+                          return Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: GestureDetector(
+                              onTap: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => WorkerDetail()));
+                              },
+                              child: Container(
+                                decoration: BoxDecoration(
+                                    color: Color(0xFF3F414F),
+                                    borderRadius: BorderRadius.circular(10)),
+                                child: Row(
+                                  children: [
+                                    Padding(
+                                        padding: EdgeInsets.symmetric(
+                                            horizontal: 20),
+                                        child: _badges[index].icon),
+                                    Padding(
+                                      padding: const EdgeInsets.only(
+                                          right: 12, top: 8, bottom: 8),
+                                      child: Container(
+                                        width: 1,
+                                        height: 60,
+                                        decoration: BoxDecoration(
+                                            color: Colors.grey,
+                                            borderRadius:
+                                                BorderRadius.circular(10)),
+                                      ),
                                     ),
-                                  ),
+                                    Text(
+                                      _badges[index].name,
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  ],
                                 ),
-                              );
-                            },
-                          ),
-                        ),
+                              ),
+                            ),
+                          );
+                        },
                       ),
                       Padding(
                         padding: const EdgeInsets.only(bottom: 10.0),
@@ -233,50 +214,47 @@ class _WorkerDetailState extends State<WorkerDetail> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Expanded(
-                        child: ListView(
-                          children: [
-                            Align(
-                              alignment: Alignment.centerLeft,
-                              child: Padding(
-                                padding: const EdgeInsets.only(
-                                    left: 8.0, bottom: 12.0),
-                                child: CircleAvatar(
-                                  radius: 30,
-                                  backgroundColor: Colors.grey,
-                                ),
+                      Column(
+                        children: [
+                          Align(
+                            alignment: Alignment.centerLeft,
+                            child: Padding(
+                              padding: const EdgeInsets.only(
+                                  left: 8.0, bottom: 12.0),
+                              child: CircleAvatar(
+                                radius: 30,
+                                backgroundColor: Colors.grey,
                               ),
                             ),
-                            Align(
-                                alignment: Alignment.centerLeft,
+                          ),
+                          Align(
+                              alignment: Alignment.centerLeft,
+                              child: Text(
+                                "Full Name",
+                                style: TextStyle(
+                                    fontSize: 24, fontWeight: FontWeight.bold),
+                              )),
+                          Align(
+                              alignment: Alignment.centerLeft,
+                              child: Padding(
+                                padding: const EdgeInsets.only(top: 4.0),
                                 child: Text(
-                                  "Full Name",
+                                  "+92 333 1234567",
                                   style: TextStyle(
-                                      fontSize: 24,
-                                      fontWeight: FontWeight.bold),
-                                )),
-                            Align(
-                                alignment: Alignment.centerLeft,
-                                child: Padding(
-                                  padding: const EdgeInsets.only(top: 4.0),
-                                  child: Text(
-                                    "+92 333 1234567",
-                                    style: TextStyle(
-                                        fontSize: 14, color: Colors.grey),
-                                  ),
-                                )),
-                            Align(
-                                alignment: Alignment.centerLeft,
-                                child: Padding(
-                                  padding: const EdgeInsets.only(top: 12.0),
-                                  child: Text(
-                                    "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque pharetra at ante ac dapibus. Nam et cursus lorem. In tempus mattis sapien vehicula commodo.",
-                                    style: TextStyle(
-                                        fontSize: 18, color: Colors.grey[600]),
-                                  ),
-                                ))
-                          ],
-                        ),
+                                      fontSize: 14, color: Colors.grey),
+                                ),
+                              )),
+                          Align(
+                              alignment: Alignment.centerLeft,
+                              child: Padding(
+                                padding: const EdgeInsets.only(top: 12.0),
+                                child: Text(
+                                  "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque pharetra at ante ac dapibus. Nam et cursus lorem. In tempus mattis sapien vehicula commodo.",
+                                  style: TextStyle(
+                                      fontSize: 18, color: Colors.grey[600]),
+                                ),
+                              ))
+                        ],
                       ),
                       Padding(
                         padding: const EdgeInsets.only(bottom: 10.0),
@@ -330,75 +308,68 @@ class _WorkerDetailState extends State<WorkerDetail> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Expanded(
-                        child: Padding(
-                          padding: const EdgeInsets.only(bottom: 8.0),
-                          child: ListView.builder(
-                            shrinkWrap: true,
-                            itemCount: _reviews.length,
-                            itemBuilder: (BuildContext context, int index) {
-                              return Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Column(
-                                  children: [
-                                    Container(
-                                      padding: EdgeInsets.symmetric(
-                                          horizontal: 8, vertical: 8),
-                                      decoration: BoxDecoration(
-                                          boxShadow: [
-                                            BoxShadow(
-                                                color: Colors.black,
-                                                blurRadius: 8,
-                                                spreadRadius: -5)
+                      ListView.builder(
+                        shrinkWrap: true,
+                        itemCount: _reviews.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          return Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Column(
+                              children: [
+                                Container(
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: 8, vertical: 8),
+                                  decoration: BoxDecoration(
+                                      boxShadow: [
+                                        BoxShadow(
+                                            color: Colors.black,
+                                            blurRadius: 8,
+                                            spreadRadius: -5)
+                                      ],
+                                      color: Color(0xFFF0FAFC),
+                                      borderRadius: BorderRadius.circular(10)),
+                                  child: Column(
+                                    children: [
+                                      Align(
+                                        alignment: Alignment.centerLeft,
+                                        child: Row(
+                                          children: [
+                                            Padding(
+                                              padding: const EdgeInsets.only(
+                                                  right: 8.0, left: 4),
+                                              child: Text(
+                                                _reviews[index].rating,
+                                                style: TextStyle(
+                                                    color: Colors.black,
+                                                    fontSize: 20,
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ),
+                                            ),
+                                            Icon(AntDesign.star,
+                                                color: Color(0xFFE8C513))
                                           ],
-                                          color: Color(0xFFF0FAFC),
-                                          borderRadius:
-                                              BorderRadius.circular(10)),
-                                      child: Column(
-                                        children: [
-                                          Align(
-                                            alignment: Alignment.centerLeft,
-                                            child: Row(
-                                              children: [
-                                                Padding(
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                          right: 8.0, left: 4),
-                                                  child: Text(
-                                                    _reviews[index].rating,
-                                                    style: TextStyle(
-                                                        color: Colors.black,
-                                                        fontSize: 20,
-                                                        fontWeight:
-                                                            FontWeight.bold),
-                                                  ),
-                                                ),
-                                                Icon(AntDesign.star,
-                                                    color: Color(0xFFE8C513))
-                                              ],
-                                            ),
-                                          ),
-                                          SizedBox(
-                                            height: 6,
-                                          ),
-                                          Align(
-                                            alignment: Alignment.centerLeft,
-                                            child: Text(
-                                              _reviews[index].review,
-                                              style: TextStyle(
-                                                  color: Colors.black,
-                                                  fontSize: 15),
-                                            ),
-                                          ),
-                                        ],
+                                        ),
                                       ),
-                                    ),
-                                  ],
+                                      SizedBox(
+                                        height: 6,
+                                      ),
+                                      Align(
+                                        alignment: Alignment.centerLeft,
+                                        child: Text(
+                                          _reviews[index].review,
+                                          style: TextStyle(
+                                              color: Colors.black,
+                                              fontSize: 15),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 ),
-                              );
-                            },
-                          ),
-                        ),
+                              ],
+                            ),
+                          );
+                        },
                       ),
                       Padding(
                         padding: const EdgeInsets.only(bottom: 10.0),
