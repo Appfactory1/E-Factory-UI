@@ -1,17 +1,21 @@
 import 'package:app_shoe_shop/constants/constants.dart';
+import 'package:app_shoe_shop/firebase/firestore.dart';
+import 'package:app_shoe_shop/firebase/storage.dart';
+import 'package:app_shoe_shop/models/job.dart';
 import 'package:app_shoe_shop/widgets/default_button.dart';
 import 'package:flutter/material.dart';
-//import 'package:geolocator/geolocator.dart';
 import 'package:multi_image_picker/multi_image_picker.dart';
-//import 'package:flutter_sound/flutter_sound.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'dart:async';
 import 'dart:io' as io;
 
+import 'package:flutter/services.dart' show rootBundle;
+import 'package:path_provider/path_provider.dart';
 import 'package:file/file.dart';
 import 'package:file/local.dart';
 import 'package:flutter_audio_recorder/flutter_audio_recorder.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class WorkForm extends StatelessWidget {
   @override
@@ -46,13 +50,23 @@ class MyCustomForm extends StatefulWidget {
 // Create a corresponding State class.
 // This class holds data related to the form.
 class MyCustomFormState extends State<MyCustomForm> {
+  //temp
+  final Firestore tempfb = Firestore.instance;
+  String username;
+  String workername;
+
+  List<String> urls = [];
   FlutterAudioRecorder _recorder;
   Recording _current;
+  io.File _file;
   RecordingStatus _currentStatus = RecordingStatus.Unset;
   List<Asset> images = List<Asset>();
   String _error = 'No Error Dectected';
   String address;
+  String detail;
   String desc;
+  List<File> imageFile;
+  int temp = -1;
   // Create a global key that uniquely identifies the Form widget
   // and allows validation of the form.
   //
@@ -89,6 +103,7 @@ class MyCustomFormState extends State<MyCustomForm> {
                 floatingLabelBehavior: FloatingLabelBehavior.always,
                 suffixIcon: Icon(Icons.home_filled),
               ),
+              onChanged: (val) => address = val,
               validator: (value) {
                 if (value.isEmpty) {
                   return 'Please enter some text';
@@ -120,6 +135,7 @@ class MyCustomFormState extends State<MyCustomForm> {
                   }
                   return null;
                 },
+                onChanged: (val) => detail = val,
               ),
             ),
           ),
@@ -212,6 +228,54 @@ class MyCustomFormState extends State<MyCustomForm> {
           // SoundPlayerUI.fromTrack(track),
           // SoundRecorderUI(track2),
 
+          // only temporary
+
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+            child: TextFormField(
+              decoration: InputDecoration(
+                contentPadding: EdgeInsets.symmetric(horizontal: 20),
+                border: outlineInputBorder(),
+                focusedBorder: outlineInputBorder(),
+                enabledBorder: outlineInputBorder(),
+                labelText: "Worker Name",
+                hintText: "Enter Name",
+                floatingLabelBehavior: FloatingLabelBehavior.always,
+                suffixIcon: Icon(Icons.home_filled),
+              ),
+              onChanged: (val) => workername = val,
+              validator: (value) {
+                if (value.isEmpty) {
+                  return 'Please enter some text';
+                }
+                return null;
+              },
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+            child: TextFormField(
+              decoration: InputDecoration(
+                contentPadding: EdgeInsets.symmetric(horizontal: 20),
+                border: outlineInputBorder(),
+                focusedBorder: outlineInputBorder(),
+                enabledBorder: outlineInputBorder(),
+                labelText: "User Name",
+                hintText: "Enter Name",
+                floatingLabelBehavior: FloatingLabelBehavior.always,
+                suffixIcon: Icon(Icons.home_filled),
+              ),
+              onChanged: (val) => username = val,
+              validator: (value) {
+                if (value.isEmpty) {
+                  return 'Please enter some text';
+                }
+                return null;
+              },
+            ),
+          ),
+          // only temporary
+
           SizedBox(
             width: 8,
           ),
@@ -221,13 +285,55 @@ class MyCustomFormState extends State<MyCustomForm> {
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(20)),
               color: Colors.blue,
-              onPressed: () {
+              onPressed: () async {
                 // Validate returns true if the form is valid, or false
                 // otherwise.
                 if (_formKey.currentState.validate()) {
                   // If the form is valid, display a Snackbar.
-                  Scaffold.of(context)
-                      .showSnackBar(SnackBar(content: Text('Processing Data')));
+                  // Scaffold.of(context)
+                  //     .showSnackBar(SnackBar(content: Text('Processing Data')));
+                  // Api("job").addDocument({"add": address});
+                  urls = await addimages(images);
+                  print(urls);
+                  // String s = await StorageApi(path: "images").addImage(
+                  //     (await images[0].getByteData()).buffer.asUint8List());
+                  // print(s);
+                  print('done');
+                  String s = await StorageApi(path: "sound")
+                      .addSound(_file.readAsBytesSync());
+                  print('$s+sound');
+                  Job j = Job(
+                      detail: detail, sound: s, images: urls, address: address);
+
+                  String uid = await Api("job").addDocumentGetId(j.toJson());
+                  print(uid);
+
+                  // temp
+                  QuerySnapshot u = await tempfb
+                      .collection("user")
+                      .where("name", isEqualTo: username)
+                      .getDocuments();
+
+                  print(u.documents[0].documentID);
+                  await tempfb
+                      .collection("user")
+                      .document(u.documents[0].documentID)
+                      .collection('job')
+                      .document(uid)
+                      .setData({"date": "1"});
+                  QuerySnapshot w = await tempfb
+                      .collection("user")
+                      .where("name", isEqualTo: workername)
+                      .getDocuments();
+
+                  print(u.documents[0].documentID);
+                  await tempfb
+                      .collection("user")
+                      .document(u.documents[0].documentID)
+                      .collection('job')
+                      .document(uid)
+                      .setData({"date": "1"});
+                  // temp
                 }
               },
               child: Text(
@@ -286,6 +392,7 @@ class MyCustomFormState extends State<MyCustomForm> {
     } catch (e) {
       print(e);
     }
+    print(_current.path + '  path');
   }
 
   _start() async {
@@ -329,7 +436,9 @@ class MyCustomFormState extends State<MyCustomForm> {
     print("Stop recording: ${result.path}");
     print("Stop recording: ${result.duration}");
     File file = widget.localFileSystem.file(result.path);
-    print("File length: ${await file.length()}");
+    _file = io.File(result.path);
+
+    print("File length: ${await _file.length()}");
     setState(() {
       _current = result;
       _currentStatus = _current.status;
@@ -426,5 +535,37 @@ class MyCustomFormState extends State<MyCustomForm> {
       images = resultList;
       _error = error;
     });
+  }
+
+  compressImage(imageFile) async {
+    // final tempDir = await getTemporaryDirectory();
+    // final path = tempDir.path;
+    // Im.Image imageFileReady = Im.decodeImage(imageFile.getByteData());
+    // final compressedImageFile = io.File('$path.jpg')
+    //   ..writeAsBytesSync(Im.encodeJpg(imageFileReady, quality: 85));
+    // // setState(() {
+    // //   imageFile = compressedImageFile;
+    // // });
+    // return compressedImageFile;
+    final byteData = await rootBundle.load(imageFile.identifier);
+    print(byteData);
+    final file = io.File('${(await getTemporaryDirectory()).path}');
+    await file.writeAsBytes(byteData.buffer
+        .asUint8List(byteData.offsetInBytes, byteData.lengthInBytes));
+
+    return file;
+    // File tempFile = io.File(filePath);
+    // return tempFile;
+  }
+
+  Future<List<String>> addimages(imgs) async {
+    List<String> url = [];
+    for (int i = 0; i < imgs.length; i++) {
+      temp += 1;
+      url.add(await StorageApi(path: "images/$temp")
+          .addImage((await imgs[i].getByteData()).buffer.asUint8List()));
+    }
+
+    return url;
   }
 }

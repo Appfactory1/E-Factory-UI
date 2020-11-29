@@ -49,6 +49,7 @@ dependencies:
   intl: ^0.16.1
   basic_utils: ^1.5.0
   circular_profile_avatar: ^1.0.6
+  flutter_absolute_path: ^1.0.6
 
 dev_dependencies:
   flutter_test:

@@ -1,3 +1,6 @@
+import 'package:app_shoe_shop/pages/dummy_form_user.dart';
+import 'package:app_shoe_shop/pages/experiment.dart';
+import 'package:app_shoe_shop/pages/get_started.dart';
 import 'package:app_shoe_shop/pages/home.dart';
 import 'package:app_shoe_shop/pages/home_page.dart';
 import 'package:flutter/material.dart';
@@ -25,7 +28,7 @@ class MyApp extends StatelessWidget {
               ),
         ),
       ),
-      home: Home(),
+      home: UserDetail(),
     );
   }
 }
